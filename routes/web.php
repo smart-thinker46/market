@@ -1,5 +1,5 @@
 <?php
- 
+
 use Illuminate\Support\Facades\Route;
 use App\Models\job;
 use Illuminate\Support\Arr;
@@ -8,11 +8,11 @@ use Illuminate\Support\Arr;
 
 
 Route::get('/', function () {
-    return view('home' );
+    return view('dashboards.admin');
 });
 
 Route::get('/about', function () {
-    return view('about');
+    return view('employee');
 });
 
 Route::get('/service', function () {
@@ -31,7 +31,7 @@ Route::get('/jobs/create', function () {
     return view('jobs.create');
 });
 
-//for the jobs page 
+//for the jobs page
 Route::post('/jobs', function () {
     //dd(request()->all());
     //Validation
@@ -46,7 +46,7 @@ Route::post('/jobs', function () {
     ]);
     return redirect('/jobs');
 });
- 
+
 Route::get('/jobs', function () {
     $jobs = job::with('employer')->latest()->simplePaginate(3);
 
@@ -61,9 +61,9 @@ Route::get('/jobs', function () {
 
 
 Route::get('/jobs/{id}', function ($id) {
-    
+
     $job = Arr::first(job::all(), fn($job) => $job['id'] = $id);
-      
+
     return view('jobs.show', ['job' => $job]);
 
     if(!$job){
